@@ -12,10 +12,15 @@
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
     "pretest": "npm run lint",
     "test": "nyc mocha -r ts-node/register src/**/*.spec.ts",
-    "start": "fabric-chaincode-node start",
+    "resolve": "npx npm-force-resolutions",
     "build": "tsc",
     "build:watch": "tsc -w",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "start": "node ./dist/create.js",
+    "create": "node ./dist/create.js",
+    "query": "node ./dist/query.js",
+    "lsitener": "node ./dist/lsitener.js"
+
   },
   "engineStrict": true,
   "author": "John Doe",
