@@ -21,8 +21,7 @@ JSON.parse(fs.readFileSync(connectionProfilePath, 'utf8')); // eslintdisable-lin
  // Get the contract from the network.
  const contract = network.getContract('demo-contract');
  // Submit the specified transaction.
- await contract.submitTransaction('createMyAsset', '002', 'Night
-Watch');
+ await contract.submitTransaction('createMyAsset', '002', 'NightWatch');
  console.log('Transaction has been submitted');
  // Disconnect from the gateway.
  gateway.disconnect();

@@ -59,5 +59,33 @@ export class MyAssetContract extends Contract {
         }
         await ctx.stub.deleteState(myAssetId);
     }
-
+    @Transaction(false)
+    public async queryAllAssets(ctx: Context): Promise<string> {
+        const startKey = '000';
+        const endKey = '999';
+        const iterator = await ctx.stub.getStateByRange(startKey, endKey);
+        const allResults = [];
+        while (true) {
+            const res = await iterator.next();
+            if (res.value && res.value.value.toString()) {
+                console.log(res.value.value.toString());
+                const Key = res.value.key;
+                let Record;
+                try {
+                    Record = JSON.parse(res.value.value.toString());
+                } catch (err) {
+                    console.log(err);
+                    Record = res.value.value.toString();
+                }
+                allResults.push({ Key, Record });
+            }
+            if (res.done) {
+                console.log('end of data');
+                await iterator.close();
+                console.info(allResults);
+                return JSON.stringify(allResults);
+            }
+        }
+    }
 }
+
