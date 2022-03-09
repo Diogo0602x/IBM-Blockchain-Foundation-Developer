@@ -2,21 +2,33 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Context, Contract, Info, Returns, Transaction } from 'fabric-contract-api';
-import { MyAsset } from './my-asset';
+import {
+    Context,
+    Contract,
+    Info,
+    Returns,
+    Transaction,
+} from "fabric-contract-api";
+import { MyAsset } from "./my-asset";
 
-@Info({title: 'MyAssetContract', description: 'My Smart Contract' })
+@Info({ title: "MyAssetContract", description: "My Smart Contract" })
 export class MyAssetContract extends Contract {
-
     @Transaction(false)
-    @Returns('boolean')
-    public async myAssetExists(ctx: Context, myAssetId: string): Promise<boolean> {
+    @Returns("boolean")
+    public async myAssetExists(
+        ctx: Context,
+        myAssetId: string
+    ): Promise<boolean> {
         const data: Uint8Array = await ctx.stub.getState(myAssetId);
-        return (!!data && data.length > 0);
+        return !!data && data.length > 0;
     }
 
     @Transaction()
-    public async createMyAsset(ctx: Context, myAssetId: string, value: string): Promise<void> {
+    public async createMyAsset(
+        ctx: Context,
+        myAssetId: string,
+        value: string
+    ): Promise<void> {
         const exists: boolean = await this.myAssetExists(ctx, myAssetId);
         if (exists) {
             throw new Error(`The my asset ${myAssetId} already exists`);
@@ -28,8 +40,11 @@ export class MyAssetContract extends Contract {
     }
 
     @Transaction(false)
-    @Returns('MyAsset')
-    public async readMyAsset(ctx: Context, myAssetId: string): Promise<MyAsset> {
+    @Returns("MyAsset")
+    public async readMyAsset(
+        ctx: Context,
+        myAssetId: string
+    ): Promise<MyAsset> {
         const exists: boolean = await this.myAssetExists(ctx, myAssetId);
         if (!exists) {
             throw new Error(`The my asset ${myAssetId} does not exist`);
@@ -40,7 +55,11 @@ export class MyAssetContract extends Contract {
     }
 
     @Transaction()
-    public async updateMyAsset(ctx: Context, myAssetId: string, newValue: string): Promise<void> {
+    public async updateMyAsset(
+        ctx: Context,
+        myAssetId: string,
+        newValue: string
+    ): Promise<void> {
         const exists: boolean = await this.myAssetExists(ctx, myAssetId);
         if (!exists) {
             throw new Error(`The my asset ${myAssetId} does not exist`);
@@ -61,8 +80,8 @@ export class MyAssetContract extends Contract {
     }
     @Transaction(false)
     public async queryAllAssets(ctx: Context): Promise<string> {
-        const startKey = '000';
-        const endKey = '999';
+        const startKey = "000";
+        const endKey = "999";
         const iterator = await ctx.stub.getStateByRange(startKey, endKey);
         const allResults = [];
         while (true) {
@@ -80,12 +99,12 @@ export class MyAssetContract extends Contract {
                 allResults.push({ Key, Record });
             }
             if (res.done) {
-                console.log('end of data');
+                console.log("end of data");
                 await iterator.close();
                 console.info(allResults);
                 return JSON.stringify(allResults);
             }
         }
-    }
+    }   
+    
 }
-
