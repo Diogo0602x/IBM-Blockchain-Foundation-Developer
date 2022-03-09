@@ -1,6 +1,6 @@
 {
   "name": "IBM-Blockchain-Foundation-Developer",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "My Smart Contract",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
@@ -33,13 +33,14 @@
     "@types/sinon-chai": "^3.2.3",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
+    "fabric-network": "^2.2.0",
     "mocha": "^7.1.1",
     "nyc": "^15.0.0",
     "sinon": "^9.0.1",
     "sinon-chai": "^3.5.0",
-    "ts-node": "^8.8.1",
+    "ts-node": "^8.10.2",
     "tslint": "^6.1.0",
-    "typescript": "^3.8.3",
+    "typescript": "^3.9.10",
     "winston": "^3.2.1"
   },
   "nyc": {
